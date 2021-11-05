@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "crawler")
 public class CrawlerController {
 
-    private static final String CRAWL_STORAGE_FOLDER = "/data/crawl/root";
+    private static final String CRAWL_STORAGE_FOLDER = "/data/crawl/root/imdb";
     private static final int NUMBER_OF_CRAWLERS = 4;
     private static final int POLITENESS_DELAY = 50;
     private static final int MAX_DEPTH_OF_CRAWLING = 2;
