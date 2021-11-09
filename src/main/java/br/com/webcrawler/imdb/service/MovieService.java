@@ -27,6 +27,12 @@ public class MovieService {
             movie.setId(movieRepository.findByName(movie.getName()).getId());
         }
 
+        /*if (movie.getComments() != null) {
+            movie.getComments().forEach(comment -> {
+                comment.setMovie(movie);
+            });
+        }*/
+
         return movieRepository.save(movie);
     }
 
@@ -40,6 +46,11 @@ public class MovieService {
         return movieRepository.findById(movieId).orElseThrow(() -> new BusinessRulesException("Movie with ID '" + movieId + "' not found."));
     }
 
+    @Transactional(readOnly = true)
+    public Movie readByIdImdb(String idImdb) {
+        return movieRepository.findByIdImdb(idImdb).orElseThrow(() -> new BusinessRulesException("Movie with ID IMDb '" + idImdb + "' not found."));
+    }
+
     @Transactional
     public void deleteById(Integer movieId) {
         movieRepository.deleteById(movieId);
@@ -47,6 +58,10 @@ public class MovieService {
 
     public boolean existsById(Integer movieId) {
         return movieRepository.existsById(movieId);
+    }
+
+    public boolean existsByIdImdb(String idImdb) {
+        return movieRepository.existsByIdImdb(idImdb);
     }
 
     @Transactional

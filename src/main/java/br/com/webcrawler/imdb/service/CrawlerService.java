@@ -38,11 +38,20 @@ public class CrawlerService extends WebCrawler {
     @Override
     public void visit(Page page) {
         if (page.getParseData() instanceof HtmlParseData) {
+
+            String url = page.getWebURL().getURL();
+            String idImdb = "";
+
+            if (url.startsWith("https://www.imdb.com/title/")) {
+                idImdb = url.replace("https://www.imdb.com/title/", "");
+                idImdb = idImdb.substring(0, idImdb.indexOf("/"));
+            }
+
             HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
             String html = htmlParseData.getHtml();
 
             HtmlJsoupService htmlJsoupService = new HtmlJsoupService();
-            htmlJsoupService.convertHtmlToData(html);
+            htmlJsoupService.convertHtmlToData(html, idImdb);
         }
     }
 }

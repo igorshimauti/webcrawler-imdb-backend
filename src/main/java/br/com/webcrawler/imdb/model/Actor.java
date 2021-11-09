@@ -2,6 +2,7 @@ package br.com.webcrawler.imdb.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
@@ -12,6 +13,7 @@ public class Actor {
     private Integer id;
 
     @NotBlank
+    @Size(max = 200)
     @Column(name = "name", length = 200, nullable = false)
     private String name;
 

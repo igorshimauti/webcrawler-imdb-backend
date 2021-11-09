@@ -3,6 +3,7 @@ package br.com.webcrawler.imdb.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,6 +15,12 @@ public class Movie implements Comparable<Movie> {
     private Integer id;
 
     @NotBlank
+    @Size(max = 15)
+    @Column(name = "id_imdb", length = 15, nullable = false)
+    private String idImdb;
+
+    @NotBlank
+    @Size(max = 200)
     @Column(name = "name", length = 200, nullable = false)
     private String name;
 
@@ -29,12 +36,23 @@ public class Movie implements Comparable<Movie> {
     @JoinTable(name = "movie_actor", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "actor_id"))
     private List<Actor> actors;
 
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    private List<Comment> comments;
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getIdImdb() {
+        return idImdb;
+    }
+
+    public void setIdImdb(String idImdb) {
+        this.idImdb = idImdb;
     }
 
     public String getName() {
@@ -67,6 +85,14 @@ public class Movie implements Comparable<Movie> {
 
     public void setActors(List<Actor> actors) {
         this.actors = actors;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override
