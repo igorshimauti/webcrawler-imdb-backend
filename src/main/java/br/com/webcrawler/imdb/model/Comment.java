@@ -22,8 +22,7 @@ public class Comment {
     @Column(name = "title", length = 200, nullable = false)
     private String title;
 
-    @NotBlank
-    @Column(name = "description", length = 2147483647, nullable = false)
+    @Column(name = "description", length = 2147483647)
     private String description;
 
     @ManyToOne

@@ -28,7 +28,7 @@ public class HtmlJsoupService {
 
     }
 
-    public void convertHtmlToData(String html, String idImdb) {
+    public static void convertHtmlToData(String html, String idImdb) {
         try {
             Document doc = Jsoup.parse(html);
 
@@ -93,29 +93,22 @@ public class HtmlJsoupService {
             if (elementDivReviews.size() > 0) {
                 List<CommentDto> commentsDto = new ArrayList<CommentDto>();
 
-                Double rate = 0.0;
-                String title = "";
-                String description = "";
-
                 for (int i = 0; i < elementDivReviews.size(); i++) {
                     Element e = elementDivReviews.get(i);
 
+                    Double rate = 0.0;
+                    String title = "";
+                    String description = "";
+
                     if (e.children().size() > 0) {
-
                         if (e.child(0).children().size() > 0) {
-
                             if (e.child(0).child(0).children().size() > 0) {
-
                                 if (e.child(0).child(0).child(0).children().size() > 0) {
                                     rate = Double.parseDouble(e.child(0).child(0).child(0).child(1).text());
                                 }
 
                                 if (e.child(0).child(3).children().size() > 0) {
                                     description = e.child(0).child(3).child(0).text();
-                                } else if (e.child(0).child(2).children().size() > 0) {
-                                    description = e.child(0).child(2).child(0).text();
-                                } else if (e.child(0).child(1).children().size() > 0) {
-                                    description = e.child(0).child(1).child(0).text();
                                 }
                             }
 
@@ -123,13 +116,9 @@ public class HtmlJsoupService {
                         }
                     }
 
-                    if (!title.equals("") && !description.equals("") && rate != 0.0) {
+                    if (!title.equals("") && rate != 0.0) {
                         commentsDto.add(new CommentDto(rate, title, description));
                     }
-
-                    rate = 0.0;
-                    title = "";
-                    description = "";
                 }
 
                 Gson gson = new Gson();
